@@ -1,17 +1,35 @@
 import Phaser from 'phaser';
 import DialogueBox from '../ui/DialogueBox.js';
+import charactersData from '../data/characters.json';
 
 const TILE_SIZE = 16;
+const MAP_TILE_WIDTH = 40;
+const MAP_TILE_HEIGHT = 30;
+const MAP_WIDTH_PX = MAP_TILE_WIDTH * TILE_SIZE;
+const MAP_HEIGHT_PX = MAP_TILE_HEIGHT * TILE_SIZE;
 
-const PLAYER_TILE_X = 16;
-const PLAYER_TILE_Y = 13;
-const PLAYER_X = PLAYER_TILE_X * TILE_SIZE;
-const PLAYER_Y = PLAYER_TILE_Y * TILE_SIZE;
+const TRIGGER_LABELS = {
+  DataZoneDoor: '📊 Data Zone',
+  DataZone: '📊 Data Zone',
+  AIZoneDoor: '🤖 AI Zone',
+  AIZone: '🤖 AI Zone',
+  MainEntrance: '🚪 Entrance',
+  Entrance: '🚪 Entrance',
+};
 
-const MIMI_TILE_X = 16;
-const MIMI_TILE_Y = 9;
-const MIMI_X = MIMI_TILE_X * TILE_SIZE;
-const MIMI_Y = MIMI_TILE_Y * TILE_SIZE;
+const DOOR_LABEL_DEPTH = 50;
+
+const PLAYER_FALLBACK_X = 300;
+const PLAYER_FALLBACK_Y = 320;
+
+const MIMI_X = 186;
+const MIMI_Y = 257;
+
+const YUKI_X = 80;
+const YUKI_Y = 80;
+
+const CHLOE_X = 420;
+const CHLOE_Y = 80;
 
 const INTERACT_DISTANCE = 100;
 
@@ -21,6 +39,14 @@ const MIMI_DIALOGUE = [
   'Explore the office and talk to the team. Press SPACE to interact with anyone you meet.',
   "When you're ready, head to the exit at the bottom of the room. Good luck!",
 ];
+
+function findCharacter(id) {
+  return charactersData.find((character) => character.id === id);
+}
+
+function parseColour(hex) {
+  return parseInt(hex.replace('#', ''), 16);
+}
 
 export default class WelcomeZone extends Phaser.Scene {
   constructor() {
@@ -34,13 +60,17 @@ export default class WelcomeZone extends Phaser.Scene {
 
     this.load.image('Modern_Office_16x16', '/tilesets/Modern_Office_16x16.png');
     this.load.tilemapTiledJSON('WelcomeZone', '/maps/WelcomeZone.json');
-    // Map references ModernOffice.tsj externally — load metadata (read-only) for linking
     this.load.json('modern-office-tsj', '/maps/ModernOffice.tsj');
+    this.load.json('characters', '/src/data/characters.json');
   }
 
   create() {
     this.sceneReady = false;
     this.initInputAndDialogue();
+
+    this.characters = this.cache.json.get('characters') ?? charactersData;
+    this.yukiData = findCharacter('yuki');
+    this.chloeData = findCharacter('chloe');
 
     const cacheMap = this.cache.tilemap.get('WelcomeZone');
     if (!cacheMap) {
@@ -81,6 +111,9 @@ export default class WelcomeZone extends Phaser.Scene {
 
     this.createPlayer(map);
     this.createMimi();
+    this.createYuki();
+    this.createChloe();
+    this.createTriggerLabels(map);
     this.physics.add.collider(this.player, wallsLayer);
     this.physics.add.collider(this.player, furnitureLayer);
 
@@ -96,17 +129,102 @@ export default class WelcomeZone extends Phaser.Scene {
       .setDepth(20)
       .setVisible(false);
 
-    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setBounds(0, 0, MAP_WIDTH_PX, MAP_HEIGHT_PX);
     this.cameras.main.startFollow(this.player);
     this.cameras.main.setZoom(2);
 
     this.sceneReady = true;
   }
 
-  /**
-   * WelcomeZone.json uses an external tileset ("source": "ModernOffice.tsj").
-   * Phaser cannot use the tileset name until it is linked to the loaded PNG.
-   */
+  createDoorLabel(centerX, topY, text) {
+    const paddingX = 8;
+    const paddingY = 4;
+    const label = this.add
+      .text(0, 0, text, {
+        fontFamily: 'Arial, sans-serif',
+        fontSize: '12px',
+        color: '#ffffff',
+      })
+      .setOrigin(0.5, 1);
+    label.setScrollFactor(1);
+
+    const boxWidth = label.width + paddingX * 2;
+    const boxHeight = label.height + paddingY * 2;
+    const boxX = centerX - boxWidth / 2;
+    const boxY = topY - boxHeight;
+
+    const background = this.add.graphics();
+    background.fillStyle(0x000000, 0.72);
+    background.fillRoundedRect(boxX, boxY, boxWidth, boxHeight, 8);
+    background.setScrollFactor(1);
+    background.setDepth(DOOR_LABEL_DEPTH - 1);
+
+    label.setPosition(centerX, topY);
+    label.setDepth(DOOR_LABEL_DEPTH);
+
+    return { label, background };
+  }
+
+  createTriggerLabels(map) {
+    this.doorLabels = [];
+
+    console.log('[WelcomeZone] Map pixel size:', map.widthInPixels, 'x', map.heightInPixels);
+    console.log('[WelcomeZone] Object layer names:', map.getObjectLayerNames());
+
+    const triggersLayer = map.getObjectLayer('Triggers');
+    console.log('[WelcomeZone] getObjectLayer("Triggers"):', triggersLayer);
+
+    if (!triggersLayer) {
+      console.warn(
+        '[WelcomeZone] Object layer "Triggers" not found — door labels skipped. Add it in Tiled and re-export JSON.',
+      );
+      return;
+    }
+
+    if (!triggersLayer.objects || triggersLayer.objects.length === 0) {
+      console.warn('[WelcomeZone] Triggers layer has no objects.');
+      return;
+    }
+
+    console.log('[WelcomeZone] Triggers object count:', triggersLayer.objects.length);
+
+    triggersLayer.objects.forEach((object) => {
+      console.log('[WelcomeZone] Trigger object read:', {
+        id: object.id,
+        name: object.name,
+        x: object.x,
+        y: object.y,
+        width: object.width,
+        height: object.height,
+        visible: object.visible,
+      });
+
+      const labelText = TRIGGER_LABELS[object.name];
+      if (!labelText) {
+        console.warn(
+          '[WelcomeZone] No label mapped for trigger name:',
+          object.name,
+          '— add it to TRIGGER_LABELS in WelcomeZone.js',
+        );
+        return;
+      }
+
+      const centerX = object.x + object.width / 2;
+      const labelY = object.y - 8;
+
+      const doorLabel = this.createDoorLabel(centerX, labelY, labelText);
+      this.doorLabels.push({ triggerName: object.name, ...doorLabel });
+
+      console.log('[WelcomeZone] Door label created:', {
+        trigger: object.name,
+        text: labelText,
+        worldX: centerX,
+        worldY: labelY,
+        depth: DOOR_LABEL_DEPTH,
+      });
+    });
+  }
+
   linkTileset(map) {
     const textureKey = 'Modern_Office_16x16';
     const tsj = this.cache.json.get('modern-office-tsj');
@@ -170,13 +288,40 @@ export default class WelcomeZone extends Phaser.Scene {
       .setDepth(10000);
   }
 
+  getMainEntranceSpawn(map) {
+    const triggersLayer = map.getObjectLayer('Triggers');
+    const entrance = triggersLayer?.objects?.find(
+      (object) => object.name === 'Entrance' || object.name === 'MainEntrance',
+    );
+
+    if (!entrance) {
+      console.warn(
+        '[WelcomeZone] Entrance trigger not found — using fallback player spawn',
+      );
+      return { x: PLAYER_FALLBACK_X, y: PLAYER_FALLBACK_Y };
+    }
+
+    const spawnX = entrance.x + entrance.width / 2;
+    const spawnY = entrance.y - 20;
+
+    console.log('[WelcomeZone] Player spawn at main entrance:', {
+      spawnX,
+      spawnY,
+      trigger: entrance.name,
+    });
+
+    return { x: spawnX, y: spawnY };
+  }
+
   createPlayer(map) {
-    this.player = this.add.rectangle(PLAYER_X, PLAYER_Y, 32, 32, 0x00ff00);
+    const spawn = this.getMainEntranceSpawn(map);
+
+    this.player = this.add.rectangle(spawn.x, spawn.y, 32, 32, 0x00ff00);
     this.player.setDepth(10);
     this.physics.add.existing(this.player);
     this.player.body.setSize(28, 28);
 
-    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.physics.world.setBounds(0, 0, MAP_WIDTH_PX, MAP_HEIGHT_PX);
     this.player.body.setCollideWorldBounds(true);
   }
 
@@ -194,12 +339,106 @@ export default class WelcomeZone extends Phaser.Scene {
     this.mimi.setDepth(9);
   }
 
+  createYuki() {
+    if (!this.yukiData) {
+      console.warn('[WelcomeZone] Character "yuki" not found in characters.json');
+      return;
+    }
+
+    this.yuki = this.add.rectangle(
+      YUKI_X,
+      YUKI_Y,
+      32,
+      32,
+      parseColour(this.yukiData.colour),
+    );
+    this.yuki.setStrokeStyle(2, 0x000000, 0.35);
+    this.yuki.setDepth(9);
+  }
+
+  createChloe() {
+    if (!this.chloeData) {
+      console.warn('[WelcomeZone] Character "chloe" not found in characters.json');
+      return;
+    }
+
+    this.chloe = this.add.rectangle(
+      CHLOE_X,
+      CHLOE_Y,
+      32,
+      32,
+      parseColour(this.chloeData.colour),
+    );
+    this.chloe.setStrokeStyle(2, 0x000000, 0.35);
+    this.chloe.setDepth(9);
+  }
+
+  getDistanceToSprite(sprite) {
+    return Phaser.Math.Distance.Between(this.player.x, this.player.y, sprite.x, sprite.y);
+  }
+
   getDistanceToMimi() {
-    return Phaser.Math.Distance.Between(this.player.x, this.player.y, this.mimi.x, this.mimi.y);
+    return this.getDistanceToSprite(this.mimi);
+  }
+
+  isPlayerNearSprite(sprite) {
+    if (!sprite) return false;
+    return this.getDistanceToSprite(sprite) <= INTERACT_DISTANCE;
   }
 
   isPlayerNearMimi() {
-    return this.getDistanceToMimi() <= INTERACT_DISTANCE;
+    return this.isPlayerNearSprite(this.mimi);
+  }
+
+  isPlayerNearYuki() {
+    return this.isPlayerNearSprite(this.yuki);
+  }
+
+  isPlayerNearChloe() {
+    return this.isPlayerNearSprite(this.chloe);
+  }
+
+  getNearestInteractableNpc() {
+    const options = [];
+
+    if (this.mimi && this.isPlayerNearMimi()) {
+      options.push({ id: 'mimi', distance: this.getDistanceToMimi() });
+    }
+    if (this.yuki && this.isPlayerNearYuki()) {
+      options.push({ id: 'yuki', distance: this.getDistanceToSprite(this.yuki) });
+    }
+    if (this.chloe && this.isPlayerNearChloe()) {
+      options.push({ id: 'chloe', distance: this.getDistanceToSprite(this.chloe) });
+    }
+
+    if (options.length === 0) return null;
+
+    options.sort((a, b) => a.distance - b.distance);
+    return options[0].id;
+  }
+
+  updateInteractHint() {
+    let hintX = this.mimi.x;
+    let hintY = this.mimi.y - 28;
+    let show = false;
+
+    const nearestId = this.getNearestInteractableNpc();
+    if (nearestId === 'mimi' && this.mimi) {
+      hintX = this.mimi.x;
+      hintY = this.mimi.y - 28;
+      show = true;
+    } else if (nearestId === 'yuki' && this.yuki) {
+      hintX = this.yuki.x;
+      hintY = this.yuki.y - 28;
+      show = true;
+    } else if (nearestId === 'chloe' && this.chloe) {
+      hintX = this.chloe.x;
+      hintY = this.chloe.y - 28;
+      show = true;
+    }
+
+    this.nearMimiHint.setPosition(hintX, hintY);
+    this.nearMimiHint.setVisible(show);
   }
 
   startMimiDialogue() {
@@ -209,23 +448,52 @@ export default class WelcomeZone extends Phaser.Scene {
     this.nearMimiHint.setVisible(false);
   }
 
+  startYukiDialogue() {
+    if (!this.yukiData) return;
+    console.log('[WelcomeZone] Starting Yuki dialogue');
+    this.dialogueBox.open(this.yukiData.name, this.yukiData.dialogue);
+    this.player.body.setVelocity(0, 0);
+    this.nearMimiHint.setVisible(false);
+  }
+
+  startChloeDialogue() {
+    if (!this.chloeData) return;
+    console.log('[WelcomeZone] Starting Chloe dialogue');
+    this.dialogueBox.open(this.chloeData.name, this.chloeData.dialogue);
+    this.player.body.setVelocity(0, 0);
+    this.nearMimiHint.setVisible(false);
+  }
+
   tryInteractWithMimi() {
     if (!Phaser.Input.Keyboard.JustDown(this.spaceKey)) return;
 
-    const distance = this.getDistanceToMimi();
-    const near = distance <= INTERACT_DISTANCE;
+    const nearestId = this.getNearestInteractableNpc();
+    if (!nearestId) return;
+
+    const distance =
+      nearestId === 'mimi'
+        ? this.getDistanceToMimi()
+        : nearestId === 'yuki'
+          ? this.getDistanceToSprite(this.yuki)
+          : this.getDistanceToSprite(this.chloe);
+
     console.log(
-      '[WelcomeZone] SPACE pressed — distance to Mimi:',
+      '[WelcomeZone] SPACE pressed — nearest NPC:',
+      nearestId,
+      'distance:',
       Math.round(distance),
       'px (need ≤',
       INTERACT_DISTANCE,
       ')',
-      near ? '→ starting dialogue' : '→ too far',
     );
 
-    if (!near) return;
-
-    this.startMimiDialogue();
+    if (nearestId === 'mimi') {
+      this.startMimiDialogue();
+    } else if (nearestId === 'yuki') {
+      this.startYukiDialogue();
+    } else if (nearestId === 'chloe') {
+      this.startChloeDialogue();
+    }
   }
 
   handleDialogueInput() {
@@ -243,7 +511,7 @@ export default class WelcomeZone extends Phaser.Scene {
       return;
     }
 
-    this.nearMimiHint.setVisible(this.isPlayerNearMimi());
+    this.updateInteractHint();
     this.tryInteractWithMimi();
 
     const speed = 150;
