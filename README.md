@@ -1,4 +1,4 @@
-# Office Mimi's
+# Office Mimis
 
 A top-down 2D browser game built with [Phaser 3](https://phaser.io/) for onboarding new team members at KDP.
 
