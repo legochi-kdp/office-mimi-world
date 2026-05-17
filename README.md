@@ -1,6 +1,5 @@
 # Office Mimis
-
-A top-down 2D browser game built with [Phaser 3](https://phaser.io/) for onboarding new team members at KDP.
+A top-down 2D browser game built with [Phaser 3](https://phaser.io/). Imagine a cozy, corporate-themed RPG where a new starter navigates their first year at work — exploring the office, building relationships, learning the ropes, and growing through real workplace moments. 
 
 ## Prerequisites
 
