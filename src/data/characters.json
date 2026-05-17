@@ -1,0 +1,393 @@
+[
+  {
+    "id": "mimi",
+    "name": "Mimi",
+    "role": "Guide",
+    "grade": null,
+    "zone": "welcome",
+    "background": null,
+    "personality": "Warm and unflappable, Mimi knows every corner of Office Mimis and treats onboarding like hosting a friend. She balances cheer with practical tips and never makes newcomers feel behind.",
+    "fun_fact": "Keeps a handwritten map of the office with everyone's coffee order scribbled in the margins.",
+    "dialogue": [
+      "G'day! You must be new here — welcome to the team!",
+      "This is Office Mimis — where data meets fun, and nobody eats lunch alone on day one.",
+      "Explore each zone and say hello to the crew. Press SPACE when you're near someone to chat.",
+      "When you're ready, head toward the exit at the bottom of the room. I'll be cheering you on!"
+    ],
+    "colour": "#FFD700"
+  },
+  {
+    "id": "yuki",
+    "name": "Yuki",
+    "role": "Team Lead",
+    "grade": "Senior Manager",
+    "zone": "welcome",
+    "background": "Chinese/Japanese",
+    "personality": "Yuki gives thoughtful career advice and mediates tension before it escalates, often drawing on both directness and diplomacy. She is genuinely invested in people's growth but perpetually misplaces one essential item per day.",
+    "fun_fact": "Once ran a retro entirely from sticky notes found in her jacket pocket from three different quarters.",
+    "dialogue": [
+      "Welcome — sit, sit. Let's talk goals for your first ninety days. Have you seen my glasses? They were on this desk.",
+      "Conflict on teams is normal; we name it early and fix it kindly. Also, is this my notebook or yours? No matter — we can share.",
+      "Where do you see yourself in two years? I have frameworks. Wait — is that my coffee? Sip carefully, we have a workshop at two.",
+      "You're in good hands here. If you get lost, ask Mimi — or check the coat hook by the kitchen. I left something important there. Again."
+    ],
+    "colour": "#E85D75"
+  },
+  {
+    "id": "chloe",
+    "name": "Chloe",
+    "role": "Analyst",
+    "grade": "Analyst",
+    "zone": "welcome",
+    "background": "Hong Kong/Australian",
+    "personality": "Chloe treats everyday moments like samples in a study — biometric curiosity included — and gets quietly thrilled when a chart confirms a hunch. She is meticulous, warm, and slightly apologetic about how much she has already logged.",
+    "fun_fact": "Tracks her own step count against the office average and insists the leaderboard is 'for wellness, not competition.'",
+    "dialogue": [
+      "Oh! A new data point — welcome! I've noted your start date and approximate walking pace from the corridor. Anonymised. Mostly.",
+      "The welcome desk has a 94% satisfaction rate in my spreadsheet. You're already improving the sample size. Thank you.",
+      "If you feel lost, I have a heat map of high-traffic routes between zones. The kitchen peak is 12:47pm. Plan accordingly.",
+      "Press SPACE anytime you want the official tour — I also have qualitative notes on where people smile the most. For science."
+    ],
+    "colour": "#4ECDC4"
+  },
+  {
+    "id": "mia",
+    "name": "Mia",
+    "role": "Data Analyst",
+    "grade": "Consultant",
+    "zone": "data",
+    "background": "Polish/Australian",
+    "personality": "Mia lives for clean datasets and the stories they tell, from survey themes to heart-rate trends during presentations. She pairs Polish precision with Aussie warmth and will offer you a metric for almost any mood.",
+    "fun_fact": "Built a dashboard that tracks how many times people say 'quick question' in meetings. It is not quick.",
+    "dialogue": [
+      "New colleague detected — welcome! I've logged your arrival time and the humidity near the data pod. Both within normal range.",
+      "Qualitative and quantitative — we need both. Your onboarding survey? Already merged with the team pulse. You rated 'curious' highly. Accurate.",
+      "The biometrics pilot is voluntary, I promise. Mostly wristbands. Mostly. Come say hi if you want the ethics one-pager.",
+      "Explore the data zone — and if you see a outlier on the floor plan, tell me. I love a good anomaly before afternoon tea."
+    ],
+    "colour": "#9B59B6"
+  },
+  {
+    "id": "jinho",
+    "name": "Jin-ho",
+    "role": "Manager",
+    "grade": "Manager",
+    "zone": "data",
+    "background": "Korean",
+    "personality": "Jin-ho coaches with calm clarity and steps in when voices rise, often using a well-timed pause instead of a raised one. He celebrates wins loudly but will ask three people if anyone has seen his phone before the next one-on-one.",
+    "fun_fact": "Schedules 'find my phone' blocks on his own calendar. They are the most honoured appointments of the week.",
+    "dialogue": [
+      "Welcome to the data floor — sit with me. Career goals first: what skills do you want sharp in six months? And have you seen my phone? Grey case.",
+      "We disagree in this team, but we disagree with respect. I keep a list of resolution phrases. Also a list of where I last put my keys.",
+      "Your development plan can be ambitious — I'll back you. Is this my water bottle? No label. We'll assume shared custody for now.",
+      "Good energy today. Check in with Mia on metrics if you're curious — and if my glasses turn up, they owe you a coffee. Probably mine."
+    ],
+    "colour": "#3498DB"
+  },
+  {
+    "id": "sofia",
+    "name": "Sofia",
+    "role": "Director",
+    "grade": "Director",
+    "zone": "data",
+    "background": "Italian",
+    "personality": "Sofia leads with warmth and sharp judgment, offering career counsel that sticks while somehow misplacing her notebook every other meeting. She believes in direct feedback served with espresso-level intensity and genuine care.",
+    "fun_fact": "Hosts 'pasta and priorities' lunches where the only rule is you must leave with one concrete next step.",
+    "dialogue": [
+      "Benvenuto — welcome! Sit. Tell me what you want from this role, not what you think I want to hear. Have you seen my notebook? Blue cover.",
+      "When two people clash, we fix the process, not the person. Usually. Is this my pen? Use it — I have three more somewhere. Maybe in the kitchen.",
+      "In two years you could be leading a workstream if you want it — let's map that. Wait, is this my calendar printout or yours?",
+      "You chose a good zone. Data with heart — that's us. If you find my reading glasses, tell them Sofia says grazie."
+    ],
+    "colour": "#E67E22"
+  },
+  {
+    "id": "sean",
+    "name": "Sean",
+    "role": "Engineer",
+    "grade": "Engineer",
+    "zone": "data",
+    "background": "Irish/Australian",
+    "personality": "Sean builds pipelines and guardrails with dry humour and a habit of turning hallway chats into sample sizes. He is sociable at the whiteboard and quietly proud when a dashboard saves someone a Friday night.",
+    "fun_fact": "Once instrumented the office kettle to measure 'brew latency' and presented it as a serious SLA slide.",
+    "dialogue": [
+      "Welcome aboard — I've already got your start timestamp in the staging table. Resting curiosity rate: elevated. Normal for day one.",
+      "If a metric looks wrong, tell me before lunch — we'll chase it. I also track how many 'quick syncs' run over time. Spoiler: not quick.",
+      "Qualitative notes matter too — I tag retro comments by theme. You said 'excited' twice in the kitchen. Positive signal.",
+      "Roaming tip: the data zone coffee is decent; level three is better but farther. I'll send you the spreadsheet. Obviously."
+    ],
+    "colour": "#1ABC9C"
+  },
+  {
+    "id": "arjun",
+    "name": "Arjun",
+    "role": "AI/ML Engineer",
+    "grade": "Senior Consultant",
+    "zone": "ai",
+    "background": "Indian",
+    "personality": "Arjun interprets language with earnest precision and softens every correction with genuine kindness. He ships models carefully and will hand you a hand-drawn diagram when words fail.",
+    "fun_fact": "Keeps a folder labelled 'idioms to research' that is now thicker than the model registry.",
+    "dialogue": [
+      "You said 'break a leg' in the corridor. I have flagged this as a safety concern in my notes. Also — welcome. I hope onboarding runs at acceptable accuracy.",
+      "Literal interpretation is a feature, not a bug. Mostly. If my tone sounds formal, I am actually very happy you are here.",
+      "I made you a welcome card. It has a neural network diagram on it. The hidden layer is labelled 'chai breaks' — for cultural alignment.",
+      "Press SPACE if you need the AI zone tour. I will explain each desk. I have also prepared a FAQ for common metaphors. No judgement."
+    ],
+    "colour": "#6C5CE7"
+  },
+  {
+    "id": "hana",
+    "name": "Hana",
+    "role": "Engineer",
+    "grade": "Engineer",
+    "zone": "ai",
+    "background": "Japanese",
+    "personality": "Hana takes instructions at face value but offers help with gentle patience, testing edge cases the way others test tea temperatures. She cares deeply about kind onboarding and clean experiment logs.",
+    "fun_fact": "Labels her lunch containers with model version numbers. 'Rice v2.1 — breaking change from v2.0.'",
+    "dialogue": [
+      "Welcome. When someone said 'let's circle back,' I scheduled an actual circle on the floor plan. They laughed. I still have the calendar hold.",
+      "If you say something is 'on the house,' I will check the building directory. Soft-hearted reminder: I am glad you joined us.",
+      "I drew you a welcome diagram — input: new teammate, output: belonging. Loss function: minimised awkwardness.",
+      "The AI pod is quiet before ten — good for focus. After that, Arjun explains idioms and I explain learning rates. Complementary skills."
+    ],
+    "colour": "#FD79A8"
+  },
+  {
+    "id": "kenji",
+    "name": "Kenji",
+    "role": "Director",
+    "grade": "Director",
+    "zone": "ai",
+    "background": "Japanese",
+    "personality": "Kenji mentors with long-view career wisdom and calm conflict mediation, though his desk is a archaeology site of misplaced chargers. He respects craft in engineering and honesty in feedback.",
+    "fun_fact": "Runs 'lost and found' office hours that are mostly him finding his own stationery.",
+    "dialogue": [
+      "Welcome — please sit. Your first quarter goals matter. Have you seen my charger? USB-C. Anyway: what do you want to learn here?",
+      "Teams argue about models sometimes; we argue with data and respect. Is this my umbrella? You may borrow. I have two somewhere.",
+      "Two years from now you might lead an initiative — let's sketch paths. Wait — is that my meeting notes or yours? The handwriting is both bad.",
+      "The AI zone rewards curiosity. Ask Hana and Arjun anything — and if you find my badge lanyard, it has sentimental value. And building access."
+    ],
+    "colour": "#2D3436"
+  },
+  {
+    "id": "emeka",
+    "name": "Emeka",
+    "role": "Data Scientist",
+    "grade": "Senior Consultant",
+    "zone": "ai",
+    "background": "Nigerian/Igbo",
+    "personality": "Emeka thinks in distributions and experiments, lighting up when a hypothesis survives contact with real users. He is curious, generous with explanations, and slightly thrilled by uncertainty.",
+    "fun_fact": "Runs a weekly 'probability of good lunch' forecast that has never stopped people from trying the Tuesday soup anyway.",
+    "dialogue": [
+      "There's a 73% probability you'll enjoy working here. Confidence interval is wide, but the mean sentiment is positive. Welcome!",
+      "I'm running a small experiment on onboarding questions — voluntary, ethical, approved. Your cohort improves our power. Thank you.",
+      "If a model feels like magic, we open the hood. If lunch feels like roulette, we still eat — but I publish the odds.",
+      "Come back when you want the AI zone explained like a lab tour. I have priors. I will update them when I meet you properly."
+    ],
+    "colour": "#00B894"
+  },
+  {
+    "id": "omar",
+    "name": "Omar",
+    "role": "Director",
+    "grade": "Director",
+    "zone": "critical_comms",
+    "background": "Arabic/Middle Eastern",
+    "personality": "Omar combines strategic clarity with hospitality, offering career guidance that feels like counsel from a trusted elder cousin. He mediates firmly and misplaces sunglasses with impressive consistency.",
+    "fun_fact": "Keeps spare reading glasses in three desks across two zones — and still asks if anyone has seen 'the good pair.'",
+    "dialogue": [
+      "Ahlan — welcome. Sit, tell me what success looks like for you this year. Have you seen my sunglasses? The dark ones. Never mind — goals first.",
+      "Critical comms means clarity under pressure. We disagree, we document, we move. Is this my tea? Share if needed — I have more in the kitchen. Probably.",
+      "Where do you see yourself in twenty-four months? I'll help carve the path. Also — is that my charger or yours? USB-C chaos is office tradition.",
+      "This zone teaches precision with people. You'll do well. If my notebook surfaces, it has your onboarding checklist. Hopefully."
+    ],
+    "colour": "#D35400"
+  },
+  {
+    "id": "carlos",
+    "name": "Carlos",
+    "role": "Senior Manager",
+    "grade": "Senior Manager",
+    "zone": "critical_comms",
+    "background": "Brazilian/Portuguese",
+    "personality": "Carlos is energising in one-on-ones and steady in disputes, with advice that sticks and a talent for losing one personal item per sprint. He leads with warmth and expects everyone to leave meetings with a next step.",
+    "fun_fact": "Brings brigadeiros to retros and claims sugar improves honest feedback uptake by 'a statistically meaningful amount.'",
+    "dialogue": [
+      "Bem-vindo! Sit — career chat time. What do you want to grow? And please — have you seen my headset? Bluetooth. Anyway, your ambitions first.",
+      "Conflict happens; we don't let it ferment. We talk, we agree, we eat something nice. Is this my coffee? Taste test accepted.",
+      "Two years — you could be shaping comms strategy if you want. I will advocate. Wait, is this my notepad? Write in it — I'll find another. Maybe.",
+      "Critical comms is heart plus rigour. You're welcome here. Tell Omar if you find sunglasses — or my headset. Both are loved."
+    ],
+    "colour": "#F39C12"
+  },
+  {
+    "id": "neha",
+    "name": "Neha",
+    "role": "Manager",
+    "grade": "Manager",
+    "zone": "critical_comms",
+    "background": "Indian/Gujarati",
+    "personality": "Neha coaches with practical wisdom and a gift for de-escalation, often over a cup of chai she may or may not have set down somewhere. She remembers everyone's development goals and misplaces exactly one pen daily.",
+    "fun_fact": "Maintains a 'kind escalation' doc that teams quote more often than the official policy wiki.",
+    "dialogue": [
+      "Welcome, welcome — sit with me. First ninety days: what matters to you? Also, have you seen my pen? Green ink. Important. Goals first, though.",
+      "When voices rise, we lower the temperature together. Is this my chai? If yes, please enjoy — I'll make another. Gujarati hospitality rules apply.",
+      "Where do you see yourself next year? Let's make it real, not performative. Is that my phone on your desk? It might be. We share fate.",
+      "You're in the right zone for clear messaging. Ask anything — and if my notebook appears, it has your name on a sticky note. With a smiley."
+    ],
+    "colour": "#E84393"
+  },
+  {
+    "id": "david",
+    "name": "David",
+    "role": "Partner",
+    "grade": "Partner",
+    "zone": "calendar_events",
+    "background": "British/Chinese",
+    "personality": "David is appreciative and precise, with a habit of requesting fresh links to documents he swears he saved yesterday. He balances British understatement with genuine warmth for the team's work.",
+    "fun_fact": "Has a folder called 'Final_FINAL_v2' that contains eleven subfolders and zero final files.",
+    "dialogue": [
+      "Splendid to have you — truly. Could someone re-send the onboarding pack? The link expired between my tea and my stand-up. Marvellous.",
+      "Wonderful progress on the calendar workstream — brilliant, all of you. Is there a fresh link to the room booking guide? Mine shows 'access denied.' Charming.",
+      "I appreciate the rigour here. Genuinely. If you see a deck titled 'Partner review — FINAL,' that's aspirational, not factual. Still — good work.",
+      "Welcome to calendar events — punctuality matters. Also, if anyone re-uploads the Q3 overview, CC me. The cloud giveth and taketh away."
+    ],
+    "colour": "#2C3E50"
+  },
+  {
+    "id": "priya",
+    "name": "Priya",
+    "role": "Partner",
+    "grade": "Partner",
+    "zone": "calendar_events",
+    "background": "Indian",
+    "personality": "Priya celebrates the team loudly while calmly asking for files to be re-shared with a new link. She is sharp on priorities and soft on people, especially on someone's first week.",
+    "fun_fact": "Says 'one quick favour' and somehow everyone says yes because her gratitude is embarrassingly sincere.",
+    "dialogue": [
+      "So good to meet you — welcome! The team's work has been brilliant. Could you re-send the invite link? Mine says 'item not found.' Happens to the best of us.",
+      "Truly impressive cadence on events this month. If anyone has the updated run sheet — fresh link, please — I'd be grateful. Marvellous crew.",
+      "I appreciate you showing up prepared. It matters. Also appreciate whoever fixes SharePoint permissions. Repeatedly. With patience.",
+      "Calendar zone sets the rhythm for the firm. You'll feel it quickly. And if my inbox has a broken attachment, tell me — I'll ask nicely for a re-upload."
+    ],
+    "colour": "#8E44AD"
+  },
+  {
+    "id": "adaeze",
+    "name": "Adaeze",
+    "role": "Partner",
+    "grade": "Partner",
+    "zone": "calendar_events",
+    "background": "Nigerian",
+    "personality": "Adaeze leads with gratitude and high standards, often praising the room while hunting for a working link to the same deck. She is direct, warm, and allergic to expired permissions.",
+    "fun_fact": "Starts thank-you voice notes with 'You people have done something wonderful' and ends with 'Now resend the file.'",
+    "dialogue": [
+      "Welcome, welcome — you are joining a brilliant team. Could someone re-link the onboarding folder? Expired again. We move anyway — marvellous.",
+      "The events calendar is looking sharp — truly. I need the panel brief, fresh upload, when you have a moment. No rush. Some rush. You understand.",
+      "I appreciate diligence. I also appreciate working hyperlinks. Both can coexist. Hopefully today.",
+      "Stay close to Zara for scheduling — she saves us all. And if you find a slide deck called 'Partner run of show,' send it. My copy vanished. Praise be to re-sends."
+    ],
+    "colour": "#C0392B"
+  },
+  {
+    "id": "zara",
+    "name": "Zara",
+    "role": "EA/Manager",
+    "grade": "Manager",
+    "zone": "calendar_events",
+    "background": "South African/Zulu",
+    "personality": "Zara runs calendars like clockwork and knows who is late before they do. She is quietly powerful, unfailingly polite, and the reason Partner reviews start on time — once.",
+    "fun_fact": "Has saved three careers by whispering 'you're in the wrong Zoom' thirty seconds before go-live.",
+    "dialogue": [
+      "Welcome — your 30-day check-in is booked. Morgan is ten minutes late; I've added buffer. Please don't be late for the Partner review — I can't save you twice.",
+      "I know everyone's schedule, including the unofficial lunch away messages. If you need a room, ask now — 2pm is already a battlefield.",
+      "Partners will ask for re-sends. Forward them to me — I'll chase. You focus on settling in. I've colour-coded your first week.",
+      "Calendar events zone is the heartbeat of the office. Step lightly, read invites carefully, and never decline the prep call. Trust me."
+    ],
+    "colour": "#16A085"
+  },
+  {
+    "id": "lucas",
+    "name": "Lucas",
+    "role": "Analyst",
+    "grade": "Analyst",
+    "zone": "calendar_events",
+    "background": "Colombian/Spanish",
+    "personality": "Lucas tracks details like a data analyst — timestamps, attendance, sentiment in retro notes — and gets quietly excited about clean exports. He is warm, precise, and already curious about your baseline metrics.",
+    "fun_fact": "Built a colour-coded heat map of 'meeting starts on time' by floor. Finance still quotes it.",
+    "dialogue": [
+      "New data point — welcome! I've logged your start time and first-route through the calendar zone. Sample size: better now.",
+      "Event attendance has patterns — I can show you after coffee. Qualitative: people smile more by the big screen. Quantitative: also true.",
+      "If a link breaks, tell Zara — I will chart how often it happens. For science. And because Partners deserve working files.",
+      "Press SPACE if you want the tour — I have a checklist and a small dashboard. Both anonymised. Mostly."
+    ],
+    "colour": "#2980B9"
+  },
+  {
+    "id": "amara",
+    "name": "Amara",
+    "role": "L&D Senior Manager",
+    "grade": "Senior Manager",
+    "zone": "reflection",
+    "background": "Ghanaian",
+    "personality": "Amara reframes stumbles as growth with Ghanaian warmth and firm belief in psychological safety. She encourages reflection without fluff and will laugh with you when a lesson lands awkwardly — then help you name what you learned.",
+    "fun_fact": "Ends workshops by asking 'What will you try before Thursday?' and actually follows up on Thursday.",
+    "dialogue": [
+      "Welcome — growth isn't always comfortable, and that's okay. No wrong answers here. Well — there are wrong answers, but we call them learning opportunities.",
+      "Your first week might feel messy. Good. Messy means you're stretching. Tell me one thing that surprised you — we'll reframe it together.",
+      "Failure is data for the soul. I said that in a deck once and it stuck. Bring questions; leave defensiveness at the door. We have chai.",
+      "Reflection zone is where you recharge honesty. Visit when you're ready — I'll help you turn 'I messed up' into 'I learned.'"
+    ],
+    "colour": "#F1C40F"
+  },
+  {
+    "id": "fatima",
+    "name": "Fatima",
+    "role": "Analyst",
+    "grade": "Analyst",
+    "zone": "reflection",
+    "background": "Somali/East African",
+    "personality": "Fatima brings gentle encouragement and L&D instincts to her analyst role, helping peers name growth edges without shame. She is thoughtful, observant, and quick to celebrate small wins as real progress.",
+    "fun_fact": "Keeps a 'glow and grow' notebook — two columns, no ranking, just honesty with kindness.",
+    "dialogue": [
+      "Salaam — welcome. You belong here. If day one feels wobbly, that's not failure — it's your brain learning a new map.",
+      "We reframe hard moments as feedback, not verdicts. Tell me one win from today, however small. I'll match it with one stretch goal.",
+      "Wrong answers happen — we treat them like compost. Something useful grows later. I promise.",
+      "This zone is for breathing and honesty. Come back when you need to reset — I'll save you a quiet corner and a kind question."
+    ],
+    "colour": "#A29BFE"
+  },
+  {
+    "id": "leilani",
+    "name": "Leilani",
+    "role": "Business Analyst",
+    "grade": "Senior Consultant",
+    "zone": "roaming",
+    "background": "Filipino/Hawaiian",
+    "personality": "Leilani is the office's social graph — she knows who eats where, who needs intro, and which engineer takes idioms literally. She bounces back from technical confusion with humour and always has a lunch recommendation.",
+    "fun_fact": "Maintains a ranked snack map that updates when someone says 'you have to try the new place.'",
+    "dialogue": [
+      "Welcome! First things first — best coffee is level three, avoid Tuesday soup. Arjun asked what 'grab lunch' means literally. Classic Arjun.",
+      "I know everyone's project and everyone's pet. Not in a creepy way — in a 'I can introduce you' way. Who do you need to meet?",
+      "Engineers keep erroring me out in the best way. I translate for humans. You translate for your future self — one bite at a time.",
+      "I roam so you don't have to guess. Flag me if you're lost — I'll walk you there and tell you who makes the team laugh at stand-up."
+    ],
+    "colour": "#FF7675"
+  },
+  {
+    "id": "ravi",
+    "name": "Ravi",
+    "role": "Consultant",
+    "grade": "Consultant",
+    "zone": "roaming",
+    "background": "Indian",
+    "personality": "Ravi speaks in probabilities when excited and stays curious about experiments — his own and everyone else's. He is approachable, slightly philosophical, and always willing to test a hypothesis about where the good samosas are.",
+    "fun_fact": "Ran a Bayesian update on 'will it rain during footy' using three weather apps and one grandmother's text.",
+    "dialogue": [
+      "There's an 81% chance you'll like this office — prior: positive. Welcome! Confidence interval widens until you try the samosas.",
+      "I'm experimenting with which corridor has the best 'accidental mentoring' rate. Early results: near the kitchen. Join the sample.",
+      "Curious question: what surprised you today? I'll log it. Not creepy — research. Fine, slightly creepy. But friendly.",
+      "I roam between zones — probability of finding me highest near coffee. Come say hi; I'll update my model of how you're settling in."
+    ],
+    "colour": "#55EFC4"
+  }
+]
