@@ -19,12 +19,58 @@
         overflow: hidden;
       }
       #game-container {
+        position: relative;
         box-shadow: 0 0 24px rgba(0, 0, 0, 0.5);
+      }
+      #game-container canvas {
+        display: block;
+        position: relative;
+        z-index: 1;
+      }
+      #dialogue-box {
+        display: none;
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        padding: 16px 18px;
+        background: rgba(17, 17, 17, 0.92);
+        border: 2px solid #666;
+        border-radius: 6px;
+        z-index: 100;
+        pointer-events: none;
+        font-family: Arial, sans-serif;
+      }
+      #dialogue-box.is-open {
+        display: block;
+      }
+      #dialogue-speaker {
+        color: #ffdd00;
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+      #dialogue-body {
+        color: #f0f0f0;
+        font-size: 14px;
+        line-height: 1.45;
+      }
+      #dialogue-hint {
+        color: #999;
+        font-size: 11px;
+        text-align: right;
+        margin-top: 12px;
       }
     </style>
   </head>
   <body>
-    <div id="game-container"></div>
+    <div id="game-container">
+      <div id="dialogue-box" aria-live="polite">
+        <div id="dialogue-speaker"></div>
+        <div id="dialogue-body"></div>
+        <div id="dialogue-hint">Press SPACE to continue</div>
+      </div>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
