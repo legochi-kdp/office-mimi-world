@@ -9,7 +9,7 @@ export default class TitleScene extends Phaser.Scene {
     const { width, height } = this.cameras.main;
 
     this.add
-      .text(width / 2, height / 2 - 40, 'Data & AI World', {
+      .text(width / 2, height / 2 - 40, "Office Mimi's", {
         fontFamily: 'Arial, sans-serif',
         fontSize: '48px',
         color: '#e94560',

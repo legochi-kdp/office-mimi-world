@@ -1,4 +1,4 @@
-# Data & AI World
+# Office Mimi's
 
 A top-down 2D browser game built with [Phaser 3](https://phaser.io/) for onboarding new team members at KDP.
 
@@ -14,7 +14,7 @@ npm install
 npm run dev
 ```
 
-The dev server opens **http://localhost:5173/public/index.html** in your browser. You should see the title screen with “Data & AI World”.
+The dev server opens **http://localhost:5173/public/index.html** in your browser. You should see the title screen with “Office Mimi's”.
 
 To build for production:
 
@@ -26,7 +26,7 @@ npm run preview
 ## Project structure
 
 ```
-kdp-data-ai-world/
+office-mimis/
 ├── assets/              # Game art and audio (served as static files)
 │   ├── tilesets/        # Tiled map tileset images
 │   ├── maps/            # Tiled .json / .tmx map exports

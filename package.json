@@ -1,7 +1,7 @@
 {
-  "name": "kdp-data-ai-world",
+  "name": "office-mimis",
   "version": "1.0.0",
-  "description": "Top-down 2D onboarding game for new team members (Phaser 3)",
+  "description": "Office Mimi's — top-down 2D onboarding game for new team members (Phaser 3)",
   "type": "module",
   "scripts": {
     "dev": "vite",
