@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import WelcomeZone from './scenes/WelcomeZone.js';
+import DataZone from './scenes/DataZone.js';
 
 const config = {
   type: Phaser.AUTO,
@@ -14,7 +15,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [WelcomeZone],
+  scene: [WelcomeZone, DataZone],
 };
 
 export default new Phaser.Game(config);
