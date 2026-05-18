@@ -1,10 +1,18 @@
 import Phaser from 'phaser';
 import DialogueBox from '../ui/DialogueBox.js';
 import charactersData from '../data/characters.json';
+import {
+  setupZoneDoorOverlaps,
+  beginSpawnImmunity,
+  applyArrivalDoorSuppress,
+  updateArrivalDoorSuppress,
+} from '../systems/zoneDoors.js';
+import { resolveMapSpawn } from '../systems/zoneSpawn.js';
+import { updateGreenPlayer } from '../systems/playerControl.js';
 
 const TILE_SIZE = 16;
-const MAP_TILE_WIDTH = 40;
-const MAP_TILE_HEIGHT = 30;
+const MAP_TILE_WIDTH = 30;
+const MAP_TILE_HEIGHT = 22;
 const MAP_WIDTH_PX = MAP_TILE_WIDTH * TILE_SIZE;
 const MAP_HEIGHT_PX = MAP_TILE_HEIGHT * TILE_SIZE;
 
@@ -15,6 +23,14 @@ const TRIGGER_LABELS = {
   AIZone: '🤖 AI Zone',
   MainEntrance: '🚪 Entrance',
   Entrance: '🚪 Entrance',
+};
+
+/** Tiled object name → Phaser scene key (Entrance is spawn-only, not listed). */
+const ZONE_TRANSITIONS = {
+  DataZoneDoor: 'DataZone',
+  DataZone: 'DataZone',
+  AIZoneDoor: 'AIZone',
+  AIZone: 'AIZone',
 };
 
 const DOOR_LABEL_DEPTH = 50;
@@ -66,6 +82,7 @@ export default class WelcomeZone extends Phaser.Scene {
 
   create() {
     this.sceneReady = false;
+    this.isTransitioning = false;
     this.initInputAndDialogue();
 
     this.characters = this.cache.json.get('characters') ?? charactersData;
@@ -116,6 +133,8 @@ export default class WelcomeZone extends Phaser.Scene {
     this.createTriggerLabels(map);
     this.physics.add.collider(this.player, wallsLayer);
     this.physics.add.collider(this.player, furnitureLayer);
+    this.zoneDoors = setupZoneDoorOverlaps(this, map, ZONE_TRANSITIONS);
+    applyArrivalDoorSuppress(this);
 
     this.nearMimiHint = this.add
       .text(this.mimi.x, this.mimi.y - 28, 'Press SPACE', {
@@ -314,7 +333,21 @@ export default class WelcomeZone extends Phaser.Scene {
   }
 
   createPlayer(map) {
-    const spawn = this.getMainEntranceSpawn(map);
+    const transitionData = this.scene.settings.data ?? {};
+    const fallback = { x: PLAYER_FALLBACK_X, y: PLAYER_FALLBACK_Y };
+    let spawn;
+
+    if (transitionData.spawnDoor) {
+      spawn = resolveMapSpawn(
+        map,
+        transitionData.spawnDoor,
+        MAP_WIDTH_PX,
+        MAP_HEIGHT_PX,
+        fallback,
+      );
+    } else {
+      spawn = this.getMainEntranceSpawn(map);
+    }
 
     this.player = this.add.rectangle(spawn.x, spawn.y, 32, 32, 0x00ff00);
     this.player.setDepth(10);
@@ -323,6 +356,8 @@ export default class WelcomeZone extends Phaser.Scene {
 
     this.physics.world.setBounds(0, 0, MAP_WIDTH_PX, MAP_HEIGHT_PX);
     this.player.body.setCollideWorldBounds(true);
+    this.player.body.enable = true;
+    beginSpawnImmunity(this);
   }
 
   ensureDialogueAboveCanvas() {
@@ -502,7 +537,7 @@ export default class WelcomeZone extends Phaser.Scene {
   }
 
   update() {
-    if (!this.sceneReady || !this.player) {
+    if (!this.sceneReady || !this.player?.body) {
       return;
     }
 
@@ -513,21 +548,7 @@ export default class WelcomeZone extends Phaser.Scene {
 
     this.updateInteractHint();
     this.tryInteractWithMimi();
-
-    const speed = 150;
-    let vx = 0;
-    let vy = 0;
-
-    if (this.cursors.left.isDown) vx = -speed;
-    else if (this.cursors.right.isDown) vx = speed;
-
-    if (this.cursors.up.isDown) vy = -speed;
-    else if (this.cursors.down.isDown) vy = speed;
-
-    this.player.body.setVelocity(vx, vy);
-
-    if (vx !== 0 && vy !== 0) {
-      this.player.body.velocity.normalize().scale(speed);
-    }
+    updateArrivalDoorSuppress(this, this.zoneDoors);
+    updateGreenPlayer(this);
   }
 }

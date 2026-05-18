@@ -1,6 +1,14 @@
 import Phaser from 'phaser';
 import DialogueBox from '../ui/DialogueBox.js';
 import charactersData from '../data/characters.json';
+import {
+  setupZoneDoorOverlaps,
+  beginSpawnImmunity,
+  applyArrivalDoorSuppress,
+  updateArrivalDoorSuppress,
+} from '../systems/zoneDoors.js';
+import { resolveMapSpawn } from '../systems/zoneSpawn.js';
+import { updateGreenPlayer } from '../systems/playerControl.js';
 
 const TILE_SIZE = 16;
 const MAP_TILE_WIDTH = 30;
@@ -16,13 +24,28 @@ const DOOR_LABEL_DEPTH = 50;
 
 const TRIGGER_LABELS = {
   WelcomeZoneDoor: '🏢 Welcome Zone',
+  'Welcome Zone': '🏢 Welcome Zone',
   AIZoneDoor: '🤖 AI Zone',
+  'AI Zone': '🤖 AI Zone',
   ArtofCommsDoor: '🎭 Art of Comms',
+  ArtofComms: '🎭 Art of Comms',
+  CriticalCommsDoor: '🎭 Art of Comms',
+};
+
+/** Tiled object name → Phaser scene key */
+const ZONE_TRANSITIONS = {
+  WelcomeZoneDoor: 'WelcomeZone',
+  'Welcome Zone': 'WelcomeZone',
+  AIZoneDoor: 'AIZone',
+  'AI Zone': 'AIZone',
+  ArtofCommsDoor: 'CriticalComms',
+  ArtofComms: 'CriticalComms',
+  CriticalCommsDoor: 'CriticalComms',
 };
 
 const NPC_SPAWNS = [
-  { id: 'mia', x: 160, y: 160 },
-  { id: 'jinho', x: 400, y: 240 },
+  { id: 'mia', x: 400, y: 240 },
+  { id: 'jinho', x: 160, y: 160 },
   { id: 'sofia', x: 560, y: 400 },
   { id: 'sean', x: 80, y: 400 },
 ];
@@ -57,12 +80,16 @@ export default class DataZone extends Phaser.Scene {
     this.load.image('Modern_Office_16x16', '/tilesets/Modern_Office_16x16.png');
     this.load.image('Room_Builder_Office_16x16', '/tilesets/Room_Builder_Office_16x16.png');
     this.load.image('Office_interiors_16x16', '/tilesets/Office_interiors_16x16.png');
+    if (this.cache.tilemap.exists('DataZone')) {
+      this.cache.tilemap.remove('DataZone');
+    }
     this.load.tilemapTiledJSON('DataZone', '/maps/DataZone.json');
     this.load.json('characters', '/src/data/characters.json');
   }
 
   create() {
     this.sceneReady = false;
+    this.isTransitioning = false;
     this.initInputAndDialogue();
 
     this.characters = this.cache.json.get('characters') ?? charactersData;
@@ -93,7 +120,7 @@ export default class DataZone extends Phaser.Scene {
     wallsLayer.setCollisionByExclusion([-1]);
     furnitureLayer.setCollisionByExclusion([-1]);
 
-    this.createPlayer();
+    this.createPlayer(map);
     this.createNpcs();
     this.createTriggerLabels(map);
 
@@ -101,6 +128,9 @@ export default class DataZone extends Phaser.Scene {
       this.physics.add.collider(this.player, wallsLayer);
       this.physics.add.collider(this.player, furnitureLayer);
     }
+
+    this.zoneDoors = setupZoneDoorOverlaps(this, map, ZONE_TRANSITIONS);
+    applyArrivalDoorSuppress(this);
 
     this.interactHint = this.add
       .text(0, 0, 'Press SPACE', {
@@ -254,14 +284,27 @@ export default class DataZone extends Phaser.Scene {
       .setDepth(10000);
   }
 
-  createPlayer() {
-    this.player = this.add.rectangle(PLAYER_SPAWN_X, PLAYER_SPAWN_Y, 32, 32, 0x00ff00);
+  createPlayer(map) {
+    const transitionData = this.scene.settings.data ?? {};
+    const fallback = { x: PLAYER_SPAWN_X, y: PLAYER_SPAWN_Y };
+    const spawnDoor = transitionData.spawnDoor ?? 'welcome';
+    const spawn = resolveMapSpawn(
+      map,
+      spawnDoor,
+      MAP_WIDTH_PX,
+      MAP_HEIGHT_PX,
+      fallback,
+    );
+
+    this.player = this.add.rectangle(spawn.x, spawn.y, 32, 32, 0x00ff00);
     this.player.setDepth(10);
     this.physics.add.existing(this.player);
     this.player.body.setSize(28, 28);
 
     this.physics.world.setBounds(0, 0, MAP_WIDTH_PX, MAP_HEIGHT_PX);
     this.player.body.setCollideWorldBounds(true);
+    this.player.body.enable = true;
+    beginSpawnImmunity(this);
   }
 
   createNpcs() {
@@ -346,7 +389,7 @@ export default class DataZone extends Phaser.Scene {
   }
 
   update() {
-    if (!this.sceneReady || !this.player) return;
+    if (!this.sceneReady || !this.player?.body) return;
 
     if (this.dialogueBox.isOpen) {
       this.handleDialogueInput();
@@ -355,21 +398,7 @@ export default class DataZone extends Phaser.Scene {
 
     this.updateInteractHint();
     this.tryInteractWithNpcs();
-
-    const speed = 150;
-    let vx = 0;
-    let vy = 0;
-
-    if (this.cursors.left.isDown) vx = -speed;
-    else if (this.cursors.right.isDown) vx = speed;
-
-    if (this.cursors.up.isDown) vy = -speed;
-    else if (this.cursors.down.isDown) vy = speed;
-
-    this.player.body.setVelocity(vx, vy);
-
-    if (vx !== 0 && vy !== 0) {
-      this.player.body.velocity.normalize().scale(speed);
-    }
+    updateArrivalDoorSuppress(this, this.zoneDoors);
+    updateGreenPlayer(this);
   }
 }

@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import WelcomeZone from './scenes/WelcomeZone.js';
 import DataZone from './scenes/DataZone.js';
+import AIZone from './scenes/AIZone.js';
+import CriticalCommsZone from './scenes/CriticalCommsZone.js';
 
 const config = {
   type: Phaser.AUTO,
@@ -15,7 +17,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [WelcomeZone, DataZone],
+  scene: [WelcomeZone, DataZone, AIZone, CriticalCommsZone],
 };
 
 export default new Phaser.Game(config);
